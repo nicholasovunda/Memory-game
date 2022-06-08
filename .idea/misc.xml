@@ -5,6 +5,8 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13459232613908872" />
         <entry key="app/src/main/res/drawable/ic_face.xml" value="0.1205" />
+        <entry key="app/src/main/res/drawable/ic_send.xml" value="0.1205" />
+        <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1205" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/memory_card.xml" value="0.1546875" />
       </map>

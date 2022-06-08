@@ -2,11 +2,11 @@ package com.example.memoryapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.GridLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memoryapp.models.BoardSize
+import com.example.memoryapp.utils.DEFAULT_ICONS
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs : TextView
 
-    private var boardSize: BoardSize = BoardSize.EASY
+    private var boardSize: BoardSize = BoardSize.HARD
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,9 +23,12 @@ class MainActivity : AppCompatActivity() {
         tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
-        rvBoard.adapter = MemoryBoardAdapter(this, boardSize.getWidth())
+        val chosenImages :List<Int> = DEFAULT_ICONS.shuffled().take(boardSize.getNumPairs())
+        val randomizedImages :List<Int> = (chosenImages + chosenImages).shuffled()
+
+        rvBoard.adapter = MemoryBoardAdapter(this, boardSize, randomizedImages)
         rvBoard.setHasFixedSize(true)
-        rvBoard.layoutManager =GridLayoutManager(this, 2)
+        rvBoard.layoutManager =GridLayoutManager(this, boardSize.getWidth())
     }
 
 }

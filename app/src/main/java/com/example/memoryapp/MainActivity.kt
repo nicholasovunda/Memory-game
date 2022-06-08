@@ -14,6 +14,8 @@ import com.example.memoryapp.utils.DEFAULT_ICONS
 class MainActivity : AppCompatActivity() {
 
     private lateinit var rvBoard: RecyclerView
+    private lateinit var memoryGame: MemoryGame
+    private lateinit var adapter: MemoryBoardAdapter
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs : TextView
     companion object{
@@ -28,16 +30,20 @@ class MainActivity : AppCompatActivity() {
         rvBoard = findViewById(R.id.rvBoard)
         tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
-        val memoryGame = MemoryGame(boardSize)
-
-        rvBoard.adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards,
+        memoryGame = MemoryGame(boardSize)
+ 
+        adapter = MemoryBoardAdapter(this, boardSize, memoryGame.cards,
             object  : MemoryBoardAdapter.CardClickListener  {
                 override fun onCardClicked(position: Int) {
-                    Log.i(TAG,"Card Clicked $position")
+                   updateGameWithFlip(position)
                 }
             })
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager =GridLayoutManager(this, boardSize.getWidth())
+    }
+    private fun updateGameWithFlip(position : Int){
+        memoryGame.flipCard(position)
+        adapter.notifyDataSetChanged()
     }
 
 }

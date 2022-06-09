@@ -1,12 +1,15 @@
 package com.example.memoryapp
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.setMargins
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memoryapp.models.BoardSize
@@ -26,17 +29,25 @@ class MemoryBoardAdapter(
         private const val TAG = "MemoryBoardAdapter"
 
     }
+
     interface CardClickListener {
         fun onCardClicked(position: Int)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imageButton =  itemView.findViewById<ImageButton>(R.id.imageButton)
+        private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
         fun bind(position: Int) {
-            val memoryCard :MemoryCard = cards[position]
+            val memoryCard: MemoryCard = cards[position]
             imageButton.setImageResource(if (memoryCard.isFaceUp) memoryCard.identifier else R.drawable.ic_launcher_background)
-            imageButton.setOnClickListener{
-                Log.i(TAG,"Clicked on position $position")
+            imageButton.alpha = if (memoryCard.isMatched) .4f else 1.0f
+            val colorStateList: ColorStateList? =
+                if (memoryCard.isMatched) ContextCompat.getColorStateList(
+                    context,
+                    R.color.gray
+                ) else null
+            ViewCompat.setBackgroundTintList(imageButton, colorStateList)
+            imageButton.setOnClickListener {
+                Log.i(TAG, "Clicked on position $position")
                 cardClickListener.onCardClicked(position)
             }
         }
@@ -44,11 +55,12 @@ class MemoryBoardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val cardHeight = parent.height / boardSize.getHeight() - (2 * MARGIN_SIZE)
-        val cardWidth = parent.width /  boardSize.getWidth()- (2 * MARGIN_SIZE )
+        val cardWidth = parent.width / boardSize.getWidth() - (2 * MARGIN_SIZE)
         val cardSideLength = min(cardWidth, cardHeight)
-     val view :View =LayoutInflater.from(context).inflate(R.layout.memory_card, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.memory_card, parent, false)
 
-        val layOutParams : ViewGroup.MarginLayoutParams = view.findViewById<CardView>(R.id.cardView).layoutParams as ViewGroup.MarginLayoutParams
+        val layOutParams: ViewGroup.MarginLayoutParams =
+            view.findViewById<CardView>(R.id.cardView).layoutParams as ViewGroup.MarginLayoutParams
         layOutParams.height = cardSideLength
         layOutParams.width = cardSideLength
         layOutParams.setMargins(MARGIN_SIZE)
@@ -56,7 +68,7 @@ class MemoryBoardAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       holder.bind(position)
+        holder.bind(position)
     }
 
     override fun getItemCount() = boardSize.numCards

@@ -5,10 +5,13 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.13459232613908872" />
         <entry key="app/src/main/res/drawable/ic_face.xml" value="0.1205" />
+        <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.1175" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.1205" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1205" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/dialog_board_size.xml" value="0.1956521739130435" />
         <entry key="app/src/main/res/layout/memory_card.xml" value="0.1546875" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.22604166666666667" />
       </map>
     </option>
   </component>

@@ -14,15 +14,16 @@ import com.example.memoryapp.utils.DEFAULT_ICONS
 class MainActivity : AppCompatActivity() {
 
     private lateinit var rvBoard: RecyclerView
-    private lateinit var memoryGame: MemoryGame
+
     private lateinit var adapter: MemoryBoardAdapter
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs : TextView
+    private lateinit var memoryGame: MemoryGame
     companion object{
         private const val TAG = "MainActivity"
     }
 
-    private var boardSize: BoardSize = BoardSize.HARD
+    private var boardSize: BoardSize = BoardSize.EASY
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                    updateGameWithFlip(position)
                 }
             })
+        rvBoard.adapter = adapter
         rvBoard.setHasFixedSize(true)
         rvBoard.layoutManager =GridLayoutManager(this, boardSize.getWidth())
     }
